@@ -6,7 +6,7 @@
 stdenv.mkDerivation (import ./do-nothing-attrs.nix // {
   name = "${drv.name}-extract-makefile";
   src = drv.src;
-  unpackPhase = drv.unpackPhase;
+  unpackPhase = drv.unpackPhase or "";
   phases = ["unpackPhase" "installPhase"];
   installPhase = ''
     mkdir $out
