@@ -6,12 +6,12 @@
 }:
 
 let pname = "blight";
-    version = "0.0.18";
+    version = "0.0.20";
 in buildPythonPackage rec {
   inherit pname version;
   src = fetchPypi {
     inherit pname version;
-    sha256 = "0b6np4si3gs15s4qf2pyfg37r6avv4c6nqcrl664cbsaqr0xwizp";
+    sha256 = "0m0gng9iazwd3zivql76qlg6yr3269d1vcv48yjsxar4gai59aml";
   };
   buildInputs = [ ];
   propagatedBuildInputs = [ click typing-extensions ];
