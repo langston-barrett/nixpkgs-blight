@@ -15,7 +15,6 @@ lib.trace ("bitcode ${name}") (import ./instrument.nix {
     export BLIGHT_WRAPPED_CXX=${pkgs.gllvm}/bin/gclang++
   '';
   fixupPhase = ''
-    rm -rf $out
     mkdir -p $out
     for f in $out/bin/*; do
       ${pkgs.gllvm}/bin/get-bc $f
