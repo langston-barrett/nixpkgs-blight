@@ -16,13 +16,15 @@ lib.trace ("bitcode ${name}") (import ./instrument.nix {
     export WLLVM_BC_STORE=$(mktemp -d)
   '';
   fixupPhase = ''
+    mkdir -p $debug
+    touch $debug/.debug
     mkdir -p $out
     for f in $out/lib/*.a; do
       ${pkgs.gllvm}/bin/get-bc "$f"
       mv "$f.bc" $out || true
     done
     for f in $out/bin/*; do
-      ${pkgs.gllvm}/bin/get-bc "$f" || {
+      ${pkgs.gllvm}/bin/get-bc -o "$f.bc" "$f" || {
         printf "Failed to run: ${pkgs.gllvm}/bin/get-bc $f\n"
       }
 
