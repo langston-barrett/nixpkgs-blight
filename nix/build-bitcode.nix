@@ -17,8 +17,12 @@ lib.trace ("bitcode ${name}") (import ./instrument.nix {
   fixupPhase = ''
     mkdir -p $out
     for f in $out/bin/*; do
-      ${pkgs.gllvm}/bin/get-bc $f
-      mv $f.bc $out
+      ${pkgs.gllvm}/bin/get-bc "$f"
+
+      # The "|| true" is for cases like coreutils which has an executable named
+      # "[". Not sure how to handle this, get-bc doesn't seem to create a "[.bc"
+      # file.
+      mv "$f.bc" $out || true
     done
   '';
 })

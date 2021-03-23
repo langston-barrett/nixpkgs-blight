@@ -1,4 +1,4 @@
-{ pkgs ? import <unstable> { }
+{ pkgs ? import <pkgs> { }
 , name ? "entr"
 , debug ? false
 }:
