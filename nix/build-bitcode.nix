@@ -13,9 +13,14 @@ lib.trace ("bitcode ${name}") (import ./instrument.nix {
   blightEnv = ''
     export BLIGHT_WRAPPED_CC=${pkgs.gllvm}/bin/gclang
     export BLIGHT_WRAPPED_CXX=${pkgs.gllvm}/bin/gclang++
+    export WLLVM_BC_STORE=$(mktemp -d)
   '';
   fixupPhase = ''
     mkdir -p $out
+    for f in $out/lib/*.a; do
+      ${pkgs.gllvm}/bin/get-bc "$f"
+      mv "$f.bc" $out || true
+    done
     for f in $out/bin/*; do
       ${pkgs.gllvm}/bin/get-bc "$f"
 

@@ -30,5 +30,6 @@ in lib.trace "instrument ${drv.name}" (overridden.overrideAttrs (oldAttrs: {
     [ pkgs.llvm pkgs.file blight ] ++ oldAttrs.buildInputs or [];
   preBuild = setBlightEnv + oldAttrs.preBuild or "";
   preConfigure = setBlightEnv + oldAttrs.preBuild or "";
+  makeFlags = oldAttrs.makeFlags or [] ++ ["CC=blight-cc" "CXX=blight-cxx"];
   fixupPhase = oldAttrs.fixupPhase or "" + fixupPhase;
 } // extraAttrs oldAttrs))
