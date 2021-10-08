@@ -22,7 +22,9 @@ lib.trace ("bitcode ${name}") (import ./instrument.nix {
       mv "$f.bc" $out || true
     done
     for f in $out/bin/*; do
-      ${pkgs.gllvm}/bin/get-bc "$f"
+      ${pkgs.gllvm}/bin/get-bc "$f" || {
+        printf "Failed to run: ${pkgs.gllvm}/bin/get-bc $f\n"
+      }
 
       # The "|| true" is for cases like coreutils which has an executable named
       # "[". Not sure how to handle this, get-bc doesn't seem to create a "[.bc"
