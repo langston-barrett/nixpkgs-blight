@@ -21,8 +21,8 @@ stdenv.mkDerivation (import ./do-nothing-attrs.nix // {
         break
       done
     # https://nixos.org/manual/nixpkgs/stable/#build-phase
-    elif [[ -f ${drv.makefile or "Makefile"} ]]; then
-      cp ${drv.makefile or "Makefile"} $out/Makefile
+    elif [[ -f "${drv.makefile or "Makefile"}" ]]; then
+      cp "${drv.makefile or "Makefile"}" "$out/Makefile"
     fi
 
     if [[ -f $out/Makefile ]]; then

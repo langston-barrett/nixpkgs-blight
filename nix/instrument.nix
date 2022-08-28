@@ -13,7 +13,7 @@
 , drv
 }:
 
-assert lib.hasMakefile drv;
+assert lib.hasMakefile drv || lib.hasConfigure drv;
 
 let
   warn = "[WARN] Not overriding stdenv for derivation ";
@@ -27,9 +27,12 @@ let
   '';
 in lib.trace "instrument ${drv.name}" (overridden.overrideAttrs (oldAttrs: {
   buildInputs =
-    [ pkgs.llvm pkgs.file blight ] ++ oldAttrs.buildInputs or [];
+    [ pkgs.clang pkgs.llvm pkgs.file blight ] ++ oldAttrs.buildInputs or [];
   preBuild = setBlightEnv + oldAttrs.preBuild or "";
   preConfigure = setBlightEnv + oldAttrs.preBuild or "";
   makeFlags = oldAttrs.makeFlags or [] ++ ["CC=blight-cc" "CXX=blight-cxx"];
   fixupPhase = oldAttrs.fixupPhase or "" + fixupPhase;
+  doCheck = false;
+  # This break installation of manpages, etc.
+  # outputs = [ "out" ];
 } // extraAttrs oldAttrs))

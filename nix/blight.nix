@@ -7,12 +7,12 @@
 }:
 
 let pname = "blight";
-    version = "0.0.33";
+    version = "0.0.47";
 in buildPythonPackage rec {
   inherit pname version;
   src = fetchPypi {
     inherit pname version;
-    sha256 = "1h52wwhqyml6zd5gckrq4cv83a4yjabvw5i60w5bbyibjsbh0d8s";
+    sha256 = "0rsnbkkpl10zaxdv835hd2jkqjqgvg6vz5avhl53mq4qvcd8hjpb";
   };
   buildInputs = [ ];
   propagatedBuildInputs = [ click pydantic typing-extensions ];
