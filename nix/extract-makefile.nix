@@ -30,7 +30,7 @@ stdenv.mkDerivation (import ./do-nothing-attrs.nix // {
     else
       printf "no" > $out/yes-or-no.log
     fi
-    if [[ ${builtins.toString debug} == 1 ]]; then
+    if [[ "${builtins.toString debug}" == 1 ]]; then
       printf "extract-makefile ${drv.name}: %s" $(cat $out/yes-or-no.log)
     fi
   '';

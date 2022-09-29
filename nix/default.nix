@@ -1,4 +1,6 @@
-{ pkgs ? import <pkgs> { }
+{ pkgs ? import <nixpkgs> {
+    crossSystem.config = "aarch64-unknown-linux-gnu";
+  }
 , name ? "entr"
 , debug ? false
 }:

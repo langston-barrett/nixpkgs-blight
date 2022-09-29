@@ -1,4 +1,5 @@
 { pkgs ? import <unstable> { }
+, pkgsCross ? pkgs
 , debug ? false
 , lib ? import ./lib.nix { inherit debug; }
 , blight ? pkgs.python3Packages.callPackage ./blight.nix { }
@@ -26,8 +27,8 @@ let
     ${blightEnv}
   '';
 in lib.trace "instrument ${drv.name}" (overridden.overrideAttrs (oldAttrs: {
-  buildInputs =
-    [ pkgs.clang pkgs.llvm pkgs.file blight ] ++ oldAttrs.buildInputs or [];
+  nativeBuildInputs = 
+    [ pkgs.clang pkgs.llvm pkgs.file blight ] ++ oldAttrs.nativeBuildInputs or [];
   preBuild = setBlightEnv + oldAttrs.preBuild or "";
   preConfigure = setBlightEnv + oldAttrs.preBuild or "";
   makeFlags = oldAttrs.makeFlags or [] ++ ["CC=blight-cc" "CXX=blight-cxx"];
